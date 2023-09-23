@@ -13,7 +13,7 @@ An Event Management System built using Django for organizing and managing events
 
 ## Introduction
 
-The Event Management System is a web application developed with Django that allows users to create, manage, and participate in events. This system simplifies the process of organizing and attending events, making it easier for both event hosts and participants.
+The Event Management System is a web application developed with Django that allows users to create, manage, and participate in events for RUET Auditorium. This system simplifies the process of organizing and attending events, making it easier for both event hosts and participants.
 
 ## Features
 
@@ -21,6 +21,7 @@ The Event Management System is a web application developed with Django that allo
 - Create and manage events with details such as name, date, time, and description.
 - Join or leave events as a participant.
 - View a list of upcoming events.
+- Order foods in the events
 - Edit and delete events you've created.
 - Responsive and user-friendly interface.
 
