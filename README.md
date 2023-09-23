@@ -39,32 +39,38 @@ The Event Management System is a web application developed with Django that allo
    ```bash
    git clone https://github.com/sheikhfahadshaon/event-management-system.git
    cd event-management-system
+   
 2. Create a virtual environment:
 
  ```bash
    Copy code
    python -m venv venv
    source venv/bin/activate
+
 3. Install dependencies:
 
    ```bash
    Copy code
    pip install -r requirements.txt
+
 4. Set up the database and perform migrations:
 
    ```bash
    Copy code
    python manage.py migrate
+
 5. Create a superuser for admin access:
 
    ```bash
    Copy code
    python manage.py createsuperuser
+
 6. Start the development server:
 
    ```bash
    Copy code
    python manage.py runserver
+
 7. Usage
    i) Access the application by visiting http://localhost:8000 in your web browser.
    ii) Log in using your superuser credentials to access the admin panel.
