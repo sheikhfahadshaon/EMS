@@ -1,11 +1,35 @@
 {% extends 'base.html' %}
+{% block style %}
+  /* Center the form on the page */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the form container height to 100% viewport height */
+  }
 
+  /* Style form elements */
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  /* Style date and time inputs */
+  input[type="date"],
+  input[type="time"],
+  textarea { /* Apply styles to all textareas */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  /* Increase the height of the description textarea */
+  textarea[name="{{ form.description.name }}"] {
+    height: 200px; /* Adjust the desired height here */
+  }
+{% endblock style %}
 {% block body %}
-  <h2>Update Event</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-  </form>
-  <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Event List</a>
+  <h2 class = "text-center">Update Event</h2>
+  {% include "add_event_form.html" %}
 {% endblock %}

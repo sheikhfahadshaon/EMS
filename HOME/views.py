@@ -124,7 +124,7 @@ def update_event(request, event_id):
                 # Check for time conflicts
                 if not has_time_conflict(updated_event, events_on_date):
                     updated_event.save()
-                    return redirect('event_list')
+                    return redirect('Event_List')
                 else:
                     messages.error(request, 'There is a time conflict with another event on the same date.')
             else:

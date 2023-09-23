@@ -28,10 +28,11 @@
         </div>
         <div class="panel-body">
           <h3 class="text-center">{{ event.name }}</h3>
-          <p><strong>Start Date:</strong> {{ event.start_date }}</p>
-          <p><strong>Start Time:</strong> {{ event.start_time }}</p>
-          <p><strong>End Time:</strong> {{ event.end_time }}</p>
-          <p><strong>Description:</strong> {{ event.description }}</p>
+          <p><strong>Start Date: </strong> {{ event.start_date }}</p>
+          <p><strong>Start Time: </strong> {{ event.start_time }}</p>
+          <p><strong>End Time: </strong> {{ event.end_time }}</p>
+          <p><strong>Total Seats: </strong> {{ event.number_of_seats }}</p>
+          <p><strong>Description: </strong> {{ event.description }}</p>
 
           {% if user == event.host %}
             <div class="text-center">

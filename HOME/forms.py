@@ -33,7 +33,7 @@ class UserLoginForm(AuthenticationForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'start_date', 'start_time', 'end_time', 'description']
+        fields = ['name', 'start_date', 'start_time', 'end_time', 'number_of_seats', 'description']
 
     widgets = {
         'start_date': forms.DateInput(attrs={'type': 'date'}),
