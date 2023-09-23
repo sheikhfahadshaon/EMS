@@ -46,7 +46,7 @@ The Event Management System is a web application developed with Django that allo
    Copy code
    python -m venv venv
    source venv/bin/activate
-
+   ```
 3. Install dependencies:
 
    ```bash
