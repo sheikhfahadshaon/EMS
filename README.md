@@ -72,9 +72,9 @@ The Event Management System is a web application developed with Django that allo
    python manage.py runserver
 
 7. Usage
-   i) Access the application by visiting http://localhost:8000 in your web browser.
-   ii) Log in using your superuser credentials to access the admin panel.
-   iii) Create events, manage users, and perform administrative tasks via the admin panel
+   * Access the application by visiting http://localhost:8000 in your web browser.
+   * Log in using your superuser credentials to access the admin panel.
+   * Create events, manage users, and perform administrative tasks via the admin panel
 
 ## Contributing
 Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
