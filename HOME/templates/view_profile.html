@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}View Profile{% endblock %}
+{% block profileActive %}active{% endblock profileActive %}
+{%block style%}
+
+.card-body {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 30vh;
+background-color: #f9f9f9;
+font-family: Arial, sans-serif;
+}
+
+.welcome-user {
+background-color: #f4f4f4;
+padding: 20px;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+text-align: center;
+}
+
+.welcome-user h2 {
+color: #333;
+font-size: 24px;
+margin-bottom: 10px;
+}
+
+.welcome-user p {
+color: #666;
+margin-bottom: 5px;
+}
+
+.post-container {
+margin-bottom: 20px;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+.post-container h3 {
+margin-top: 0;
+}
+.post-container p {
+margin-bottom: 5px;
+}
+.profile-buttons {
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+}
+
+.profile-buttons a {
+
+display: inline-block;
+margin-right: 10px;
+padding: 10px 20px;
+text-decoration: none;
+color: #ffffff;
+background-color: #007bff;
+border-radius: 5px;
+}
+
+.profile-buttons a:hover {
+background-color: #0056b3;
+}
+.post-container {
+/* Additional styles for the post container */
+margin-bottom: 20px;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+/* Additional styles for the profile buttons */
+.profile-buttons {
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+}
+
+/* Additional styles for the update and delete buttons */
+.post-buttons {
+margin-top: 10px;
+text-align: center;
+}
+
+.post-buttons a {
+display: inline-block;
+margin-right: 10px;
+padding: 5px 10px;
+text-decoration: none;
+color: #ffffff;
+background-color: #007bff;
+border-radius: 5px;
+}
+
+.post-buttons a:hover {
+background-color: #0056b3;
+}
+
+{%endblock%}
+{% block body %}
+ <div class="profile-buttons">
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'change_password' %}" class="btn btn-primary">Change Password</a>
+    <a href="{% url 'delete_profile' %}" class="btn btn-danger">Delete Profile</a>
+</div>
+<div class="card-body">
+    <div class="welcome-user">
+        <h2>Welcome, {{ user.first_name}} {{user.last_name}}</h2>
+        <p>Username: {{user.username}}</p>
+        <p>Email: {{ user.email }}</p>
+    </div>
+</div>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Hosted Events</h3>
+            <ul class="list-group">
+                {% for event in hosted_events %}
+                    <li class="list-group-item">
+                      <a href="{% url 'event_detail' event.id %}" class="btn btn-info btn-sm float-right mr-2">{{ event.name }}</a>
+                      <a href="{% url 'update_event' event.id %}" class="btn btn-primary btn-sm float-right mr-2">Edit</a>
+                      <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm float-right mr-2">Delete</a>
+                    </li>
+                {% empty %}
+                    <li>No hosted events.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Participating Events</h3>
+            <ul>
+                {% for event in participating_events %}
+                    <li class="list-group-item">
+                      <a href="{% url 'event_detail' event.id %}" class="btn btn-info btn-sm float-right mr-2">{{ event.name }}</a>
+                        <form method="post" action="{% url 'remove_participant' event.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Remove yourself as a participant</button>
+                      </form>
+                    </li>
+                {% empty %}
+                    <li>No participating events.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+/* Styling for the pop-up container */
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
+/* Styling for the close button */
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Styling for the message text */
+.popup-message {
+    margin-bottom: 10px;
+}
+
+/* Styling for different message types */
+.popup-success {
+    color: green;
+}
+
+.popup-error {
+    color: red;
+}
+
+.popup-warning {
+    color: orange;
+}

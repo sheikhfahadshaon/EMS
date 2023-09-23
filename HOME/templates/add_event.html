@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Event{% endblock %}
+{% block add_event_active %}active{% endblock add_event_active %}
+{% block style %}
+<style>
+  /* Center the form on the page */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the form container height to 100% viewport height */
+  }
+
+  /* Style form elements */
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  /* Style date and time inputs */
+  input[type="date"],
+  input[type="time"],
+  textarea { /* Apply styles to all textareas */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  /* Increase the height of the description textarea */
+  textarea[name="{{ form.description.name }}"] {
+    height: 200px; /* Adjust the desired height here */
+  }
+</style>
+{{ form.media}}
+{% endblock %}
+
+{% block body %}
+<div class="form-container">
+  <div class="container">
+    <h2 class="text-center">Add Event</h2>
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.name.id_for_label }}">Event Name:</label>
+        <div class="col-sm-10">
+          {{ form.name }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.start_date.id_for_label }}">Start Date:</label>
+        <div class="col-sm-10">
+          <input type="date" id="{{ form.start_date.id_for_label }}" name="{{ form.start_date.name }}"
+                 value="{{ form.start_date.value|default:'' }}" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.start_time.id_for_label }}">Start Time:</label>
+        <div class="col-sm-10">
+          <input type="time" id="{{ form.start_time.id_for_label }}" name="{{ form.start_time.name }}"
+                 value="{{ form.start_time.value|default:'' }}" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.end_time.id_for_label }}">End Time:</label>
+        <div class="col-sm-10">
+          <input type="time" id="{{ form.end_time.id_for_label }}" name="{{ form.end_time.name }}"
+                 value="{{ form.end_time.value|default:'' }}" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="{{ form.description.id_for_label }}">Description:</label>
+        <div class="col-sm-10">
+          {{ form.description }}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Save Event</button>
+          <a href="{% url 'Event_List' %}" class="btn btn-secondary">Back to Event List</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

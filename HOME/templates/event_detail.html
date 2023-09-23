@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="text-center">Event Details</h2>
+        </div>
+        <div class="panel-body">
+          <h3 class="text-center">{{ event.name }}</h3>
+          <p><strong>Start Date:</strong> {{ event.start_date }}</p>
+          <p><strong>Start Time:</strong> {{ event.start_time }}</p>
+          <p><strong>End Time:</strong> {{ event.end_time }}</p>
+          <p><strong>Description:</strong> {{ event.description }}</p>
+
+          {% if user == event.host %}
+            <div class="text-center">
+              <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Edit Event</a>
+              <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete Event</a>
+            </div>
+          {% else %}
+            <form method="post" action="{% url 'add_participant' event.id %}">
+              {% csrf_token %}
+              <div class="text-center">
+                <button type="submit" class="btn btn-success">Join Event</button>
+              </div>
+            </form>
+          {% endif %}
+        </div>
+        <div class="panel-footer">
+          <h3 class="text-center">Participants</h3>
+          <ul class="list-group">
+            {% for participant in participants %}
+              <li class="list-group-item">{{ participant.username }}</li>
+            {% empty %}
+              <li class="list-group-item">No participants yet.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="{% url 'Event_List' %}" class="btn btn-secondary">Back to Event List</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

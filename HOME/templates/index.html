@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block style %}
+
+/* Add custom styles here */
+.carousel-inner img {
+width: 100%;
+height: auto;
+}
+
+.carousel-caption {
+background-color: rgba(0, 0, 0, 0.7);
+padding: 10px;
+border-radius: 5px;
+}
+
+.carousel-caption h2 {
+color: #fff;
+}
+
+.list-group-item:hover {
+background-color: #f5f5f5;
+}
+
+.right-column {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100%; /* Fill the entire right column with content */
+}
+
+{% endblock style %}
+{% block title %}Home{% endblock title %}
+{% block home_active %}active{% endblock home_active %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>RUET</h2>
+      <h5>Rajshahi University of Engineering and Technology</h5>
+      {% load static %}
+      <img src="{% static 'MainGate.jpg' %}" class="img-responsive" alt="RUET Main Gate">
+      <p>Rajshahi University of Engineering & Technology, commonly known by the acronym RUET, is a public technological
+        university in Rajshahi, Bangladesh. It specializes in the field of applied sciences, engineering, technology,
+        architecture, and urban planning</p>
+      <h3>Some Links</h3>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="https://www.ruet.ac.bd/">RUET Official Website</a></li>
+        <li><a href="http://103.48.16.80/admission/gce_login.php">Admission</a></li>
+        <li><a href="https://www.ruet.ac.bd/notice">Notice</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-8">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <!-- Add more slides indicators here if needed -->
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="{% static 'Audi_Entrance.jpg' %}" alt="Ruet Auditorium" class="img-carousel">
+            <div class="carousel-caption">
+              <h2>Ruet Auditorium</h2>
+              <p>The university has a well-equipped and furnished Auditorium near the academic area. There are more than
+                450 seats for the participants. The auditorium is used for various university programs arranged by the
+                departments, workshops, seminars, presentations, conferences, cultural programs, and more.</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <img src="{% static 'Audi_Inner.jpg' %}" alt="Third Image" class="img-carousel">
+            <div class="carousel-caption">
+              <h2>Ruet Auditorium</h2>
+              <p>The university has a well-equipped and furnished Auditorium near the academic area. There are more than
+                450 seats for the participants. The auditorium is used for various university programs arranged by the
+                departments, workshops, seminars, presentations, conferences, cultural programs, and more.</p>
+            </div>
+          </div>
+          <!-- Add more slides here if needed -->
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <h3 class="text-center">Previous Events</h3>
+      <ul class="list-group">
+        {% for event in expired_events %}
+        <li class="list-group-item text-center"> <!-- Add text-center class here -->
+          <a href="{% url 'event_detail' event.id %}" class="btn btn-info btn-sm my-2 py-2">{{ event.name }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No previous events found.</li>
+        {% endfor %}
+      </ul>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
