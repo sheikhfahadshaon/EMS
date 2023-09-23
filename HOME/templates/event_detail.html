@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
+{% block title %}
+{{ event.name }}
+{% endblock title %}
 
+{% block style %}
+.participant-card {
+  float: left;
+  width: calc(33.33% - 10px); /* Adjust the width as needed */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+{% endblock style %}
 {% block body %}
+
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -20,6 +38,17 @@
               <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Edit Event</a>
               <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete Event</a>
             </div>
+          {% elif event.participants.count == event.number_of_seats %}
+            <div class="text-center">
+              <a href="#" class="btn btn-primary">Fully Booked</a>
+            </div>
+          {% elif user in event.participants.all %}
+            <div class="text-center">
+              <form method="post" action="{% url 'remove_participant' event.id user.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Remove yourself from participants</button>
+              </form>
+            </div>
           {% else %}
             <form method="post" action="{% url 'add_participant' event.id %}">
               {% csrf_token %}
@@ -30,14 +59,28 @@
           {% endif %}
         </div>
         <div class="panel-footer">
-          <h3 class="text-center">Participants</h3>
-          <ul class="list-group">
-            {% for participant in participants %}
-              <li class="list-group-item">{{ participant.username }}</li>
+          <h3 class="text-center">Participants: {{ event.participants.count }}</h3>
+          <div class="participant-list">
+            {% for participant in event.participants.all %}
+              <div class="participant-card float-left">
+                <div class="card-body">
+                  <h5 class="card-title">{{ participant.username }}</h5>
+                  <p class="card-text"><strong>Name:</strong> {{ participant.first_name }} {{ participant.last_name }}</p>
+                  <p class="card-text"><strong>Email:</strong> {{ participant.email }}</p>
+                  {% if user == event.host %}
+                    <form method="post" action="{% url 'remove_participant' event.id participant.id %}" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="participant_id" value="{{ participant.id }}">
+                      <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </div>
             {% empty %}
-              <li class="list-group-item">No participants yet.</li>
+              <p>No participants yet.</p>
             {% endfor %}
-          </ul>
+            <div style="clear: both;"></div> {# Clear the float to prevent layout issues #}
+          </div>
         </div>
       </div>
       <div class="text-center">

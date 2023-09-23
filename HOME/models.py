@@ -9,6 +9,7 @@ class Event(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hosted_events')
     description = models.TextField()
     participants = models.ManyToManyField(User, blank=True, related_name='events_attending')
+    number_of_seats = models.PositiveIntegerField(default=1200)  # Add this field
 
     def __str__(self):
         return self.name

@@ -17,7 +17,7 @@
               <a href="{% url 'update_event' event.id %}" class="btn btn-primary btn-sm">Edit</a>
               <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm ml-2">Delete</a>
             {% elif user in event.participants.all %}
-              <form method="post" action="{% url 'remove_participant' event.id %}" style="display: inline;">
+              <form method="post" action="{% url 'remove_participant' event.id user.id %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm">Remove yourself as a participant</button>
               </form>

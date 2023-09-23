@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth import login, authenticate, logout
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -6,7 +6,7 @@ from .models import Event
 from django.contrib import messages
 from django.utils import timezone
 from datetime import date
-
+from django.db.models import Q
 
 
 def index(request):
@@ -151,7 +151,8 @@ def event_list(request):
         messages.error(request, 'You need to log in first')
         return redirect('home')
     current_datetime = timezone.now()
-    events = Event.objects.filter(start_date__gte=current_datetime.date(), start_time__gte=current_datetime.time())
+    events = Event.objects.filter(start_date__gte=current_datetime.date())
+    print(current_datetime.date())
     return render(request, 'event_list.html', {'events': events})
 
 @login_required
@@ -172,7 +173,7 @@ def add_participant(request, event_id):
         event.participants.add(request.user)
         messages.success(request, 'You have successfully joined the event as a participant.')
 
-    return redirect('Event_List')
+    return  redirect(reverse('event_detail', args=[event_id]))
 
 
 @login_required
@@ -202,17 +203,18 @@ def delete_profile(request):
 
 
 @login_required
-def remove_participant(request, event_id):
+def remove_participant(request, event_id, user_id):
     event = get_object_or_404(Event, pk=event_id)
+    user_to_remove = get_object_or_404(User, pk=user_id)  # Get the user to remove
 
     # Check if the user is a participant in the event
-    if request.user in event.participants.all():
-        event.participants.remove(request.user)
-        messages.success(request, 'You have been removed from the event participants.')
+    if user_to_remove in event.participants.all():
+        event.participants.remove(user_to_remove)
+        messages.success(request, f'{user_to_remove.username} has been removed from the event participants.')
     else:
-        messages.warning(request, 'You are not a participant in this event.')
+        messages.warning(request, f'{user_to_remove.username} is not a participant in this event.')
 
-    return redirect('Event_List')
+    return redirect('event_detail', event_id=event_id)
 
 @login_required
 def change_password(request):
