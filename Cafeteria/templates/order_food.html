@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order Food - {{ event.name }}
+{% endblock title %}
+
+{% block style %}
+/* Add border and background color to the food cards */
+.food-card {
+  border: 1px solid #000; /* Border color */
+  background-color: aquamarine; /* Background color */
+  border-radius: 5px; /* Border radius */
+  text-align: center; /* Center align content */
+  padding: 10px; /* Add some padding inside the cards */
+  margin-bottom: 20px; /* Add margin below each card */
+}
+
+/* Add border radius to images */
+.food-card img {
+  border-radius: 5px; /* Border radius for images */
+  max-width: 100%; /* Ensure images don't exceed card width */
+  height: 150px; /* Set a fixed height for images */
+}
+
+/* Center-align food card titles */
+.food-card .card-title {
+  text-align: center;
+}
+
+/* Set a fixed height for all cards */
+.food-card .card {
+  height: 350px; /* Set the height to your desired value */
+}
+
+{% endblock style %}
+
+{% block body %}
+<div class="container">
+  <a href="{% url 'Cafeteria:order_list' event.id %}" class="btn btn-primary">My Orders</a>
+  <h2 class="text-center">Order Food for {{ event.name }}</h2>
+
+  <div class="row">
+    {% for food_item in food_items %}
+      <div class="col-md-4">
+        <div class="food-card">
+          <div class="card">
+            <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ food_item.name }}</h5>
+              <p class="card-text">{{ food_item.description }}</p>
+              <p class="card-text">Price: {{ food_item.price }} Taka</p>
+              <form method="post" action="{% url 'Cafeteria:order_place' food_item.id event.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="quantity">Quantity:</label>
+                  <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                </div>
+                <button type="submit" class="btn btn-primary">Order</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}

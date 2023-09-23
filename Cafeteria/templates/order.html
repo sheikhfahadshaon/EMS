@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order Confirmation
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+  <h2 class="text-center">Order Confirmation</h2>
+  <div class="alert alert-success" role="alert">
+    Your order has been successfully placed!
+  </div>
+  <p class="text-center">
+    <a href="{% url 'Cafeteria:order_food' event.id %}" class="btn btn-primary">Back to Food Selection</a>
+  </p>
+</div>
+{% endblock body %}

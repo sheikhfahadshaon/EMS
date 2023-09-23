@@ -9,8 +9,8 @@
   width: calc(33.33% - 10px); /* Adjust the width as needed */
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: #000;
-  color: #fff;
+  background-color: #20B2AA;
+  color: #000;
   border: 1px solid #000;
   border-radius: 5px;
   padding: 10px;
@@ -84,6 +84,10 @@
         </div>
       </div>
       <div class="text-center">
+        {% if user in event.participants.all  %}
+          <a href="{% url 'Cafeteria:order_food' event.id %}" class="btn btn-primary">Order Food</a>
+
+        {% endif %}
         <a href="{% url 'Event_List' %}" class="btn btn-secondary">Back to Event List</a>
       </div>
     </div>

@@ -1,0 +1,48 @@
+<!-- order_list.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}
+My Orders - {{ event.name }}
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+  <h2 class="text-center">My Orders for {{ event.name }}</h2>
+  <h4 class="text-center"> Total bill: {{ total_bill }} Taka</h4>
+  <div class="order-list">
+    {% if orders %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Food Item</th>
+            <th>Quantity</th>
+            <th>Total Price (Taka)</th>
+            <th>Cancel Order</th>  {# Add a new column for canceling orders #}
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td>{{ order.food_item.name }}</td>
+              <td>{{ order.quantity }}</td>
+              <td>{{ order.total_price }}</td>
+              <td>
+                <form method="post" action="{% url 'Cafeteria:cancel_order' order.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Cancel</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No orders found for this event.</p>
+    {% endif %}
+  </div>
+  <p class="text-center">
+    <a href="{% url 'Cafeteria:order_food' event.id %}" class="btn btn-primary">Back to Food Selection</a>
+  </p>
+</div>
+{% endblock body %}
