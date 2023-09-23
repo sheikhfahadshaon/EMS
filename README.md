@@ -9,7 +9,6 @@ An Event Management System built using Django for organizing and managing events
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 
 ## Introduction
