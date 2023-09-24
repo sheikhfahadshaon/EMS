@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout,update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import Event
@@ -196,10 +197,24 @@ def edit_profile(request):
 
 @login_required
 def delete_profile(request):
+    user = request.user
+
     if request.method == 'POST':
-        request.user.delete()
-        return redirect('logout')  # Redirect to logout view
-    return render(request, 'delete_profile.html')
+        form = DeleteProfileForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            if user.check_password(password):
+                user.delete()
+                messages.success(request, 'Your profile has been deleted.')
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid password. Profile not deleted.')
+    else:
+        form = DeleteProfileForm()
+
+    context = {'form': form}
+    return render(request, 'delete_profile.html', context)
+
 
 
 @login_required
@@ -219,21 +234,19 @@ def remove_participant(request, event_id, user_id):
 @login_required
 def change_password(request):
     user = request.user
-
     if request.method == 'POST':
-        form = ChangePasswordForm(user, request.POST)
+        form = PasswordChangeForm(user, request.POST)
         if form.is_valid():
-            old_password = form.cleaned_data['old_password']
-            new_password = form.cleaned_data['new_password']
-            if user.check_password(old_password):
-                user.set_password(new_password)
-                user.save()
-                messages.success(request, 'Password changed successfully.')
-                return redirect('change_password')
-            else:
-                messages.error(request, 'Invalid old password.')
+            user = form.save()
+            update_session_auth_hash(request, user)  # Update the session auth hash
+            messages.success(request, 'Password changed successfully.')
+            return redirect('change_password')
     else:
-        form = ChangePasswordForm(user, request.POST)
+        form = PasswordChangeForm(user)
+
+    # Avoid rendering messages on GET requests
+    storage = messages.get_messages(request)
+    storage.used = True
 
     context = {'form': form}
     return render(request, 'change_password.html', context)

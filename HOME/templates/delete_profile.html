@@ -1,13 +1,41 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Profile{% endblock %}
+{% block title %}Delete Profile{% endblock title %}
+{% block style %}
+    .container {
+        margin: 20px auto;
+        max-width: 400px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
+    h2 {
+        margin-top: 0;
+    }
+
+        .delete-profile-form {
+        margin-top: 20px;
+    }
+
+    .delete-profile-form p {
+        margin-bottom: 10px;
+    }
+
+    .delete-profile-form button {
+        margin-top: 10px;
+    }
+
+{% endblock style %}
 {% block body %}
-  <h2>Delete Profile</h2>
-  <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete Profile</button>
-  </form>
-  <a href="{% url 'view_profile' %}" class="btn btn-secondary">Cancel</a>
+<div class="container">
+    <h2>Delete Profile</h2>
+    <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
+    <form method="POST" class="delete-profile-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-danger">Delete Profile</button>
+    </form>
+</div>
 {% endblock %}

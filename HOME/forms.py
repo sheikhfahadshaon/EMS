@@ -40,9 +40,6 @@ class EventForm(forms.ModelForm):
         'start_time': forms.TimeInput(attrs={'type':'time'})
     }
 
-class ChangePasswordForm(PasswordChangeForm):
-    def __init__(self,user, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['old_password'].widget.attrs['placeholder'] = 'Enter your old password'
-        self.fields['new_password1'].widget.attrs['placeholder'] = 'Enter your new password'
-        self.fields['new_password2'].widget.attrs['placeholder'] = 'Confirm your new password'
+
+class DeleteProfileForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}))
