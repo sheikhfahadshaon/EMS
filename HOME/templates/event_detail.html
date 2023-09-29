@@ -32,6 +32,7 @@
           <p><strong>Start Time: </strong> {{ event.start_time }}</p>
           <p><strong>End Time: </strong> {{ event.end_time }}</p>
           <p><strong>Total Seats: </strong> {{ event.number_of_seats }}</p>
+          <p><strong>Host </strong> {{ event.host.username }}</p>
           <p><strong>Description: </strong> {{ event.description }}</p>
 
           {% if user == event.host %}
